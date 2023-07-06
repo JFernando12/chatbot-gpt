@@ -1,7 +1,6 @@
 import { ChatCompletionRequestMessage, Configuration, OpenAIApi } from 'openai';
-import { v1 } from './promps';
-import { OPENAI_API_KEY } from './config';
-import { RolesSystem } from './interfaces/roles';
+import { OPENAI_API_KEY } from '../config';
+import { RolesSystem } from '../interfaces/roles';
 
 const configuration = new Configuration({
   apiKey: OPENAI_API_KEY,
@@ -10,18 +9,20 @@ const openai = new OpenAIApi(configuration);
 
 export class ChatGpt {
   model: string = 'gpt-3.5-turbo';
-  temperature: number = 0.2;
+  temperature: number = 0;
   messages: ChatCompletionRequestMessage[] = [];
 
-  constructor(roleSystem: RolesSystem, promp: string) {
+  constructor(roleSystem: RolesSystem, promp?: string) {
     this.messages.push({
       role: 'system',
       content: roleSystem,
     });
-    // this.messages.push({
-    //   role: 'user',
-    //   content: promp,
-    // });
+    if (promp) {
+      this.messages.push({
+        role: 'user',
+        content: promp,
+      });
+    }
   }
 
   async sendMessage(

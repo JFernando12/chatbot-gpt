@@ -1,6 +1,6 @@
 import { Buttons, Client, LocalAuth } from 'whatsapp-web.js';
 import qrcode from 'qrcode-terminal';
-import { numberValidation } from './numberValidation';
+import { numberValidation } from '../utils/numberValidation';
 
 class Whatsapp {
   private conexionStatus: boolean = false;
