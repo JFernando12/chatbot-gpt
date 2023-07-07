@@ -1,6 +1,9 @@
 import mongoose from 'mongoose';
 import { ChatCompletionRequestMessage } from 'openai';
 import { UserState } from '../interfaces/states';
+import moment = require('moment-timezone');
+
+moment.tz.setDefault('America/Mexico_City');
 
 interface UserAttrs {
   name: string;

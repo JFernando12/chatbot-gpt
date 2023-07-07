@@ -4,6 +4,9 @@ import { User } from '../model/user';
 import { RolesSystem } from '../interfaces/roles';
 import { Templates } from '../interfaces/templates';
 import { UserState } from '../interfaces/states';
+import moment = require('moment-timezone');
+
+moment.tz.setDefault('America/Mexico_City');
 
 export class Chat {
   number: string;
