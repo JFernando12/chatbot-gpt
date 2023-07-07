@@ -45,7 +45,7 @@ export class Chat {
       if (content.toLocaleLowerCase().includes('agente')) {
         user.state = UserState.agent;
         await user.save();
-        return { messsage: '', state: user.state };
+        return { messsage: Templates.agentInit, state: user.state };
       }
 
       if (content.toLocaleLowerCase().includes('lucy')) {
