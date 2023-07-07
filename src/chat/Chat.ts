@@ -26,26 +26,38 @@ export class Chat {
     const user = users[0];
 
     if (user) {
-      const ultimaActualizacion = Date.parse(user.updatedAt);
+      const ultimaActualizacion = user.updatedAt;
 
       // Calcular la diferencia de tiempo entre la última actualización y el momento actual
-      console.log('Date now: ', Date.now());
+      console.log('Date now: ', moment().toDate());
       console.log('Ultima actualizacion: ', ultimaActualizacion);
-      const diferenciaTiempo = Date.now() - ultimaActualizacion;
-      const diferenciaHoras = Math.floor(diferenciaTiempo / (1000 * 60 * 60));
-      const diferenciaMinutos = Math.floor(diferenciaTiempo / (1000 * 60));
-      const diferenciaSegundos = Math.floor(diferenciaTiempo / 10000);
+      const minutesDifference = moment(moment().toDate()).diff(
+        ultimaActualizacion,
+        'minutes'
+      );
+      console.log('minutes: ', minutesDifference);
 
-      console.log('diferenciaHoras: ', diferenciaHoras);
-      console.log('diferenciaMinutos: ', diferenciaMinutos);
-      console.log('diferenciaSegundos: ', diferenciaSegundos);
+      const secondDiferrence = moment(moment().toDate()).diff(
+        ultimaActualizacion,
+        'seconds'
+      );
+      console.log('seconds', secondDiferrence);
 
-      if (diferenciaSegundos >= 20) {
-        user.messages = [];
-        user.state = UserState.new;
-        await user.save();
-        return { messsage: Templates.welcomeMessage, state: user.state };
-      }
+      // const diferenciaTiempo = Date.now() - ultimaActualizacion;
+      // const diferenciaHoras = Math.floor(diferenciaTiempo / (1000 * 60 * 60));
+      // const diferenciaMinutos = Math.floor(diferenciaTiempo / (1000 * 60));
+      // const diferenciaSegundos = Math.floor(diferenciaTiempo / 10000);
+
+      // console.log('diferenciaHoras: ', diferenciaHoras);
+      // console.log('diferenciaMinutos: ', diferenciaMinutos);
+      // console.log('diferenciaSegundos: ', diferenciaSegundos);
+
+      // if (diferenciaSegundos >= 20) {
+      //   user.messages = [];
+      //   user.state = UserState.new;
+      //   await user.save();
+      //   return { messsage: Templates.welcomeMessage, state: user.state };
+      // }
 
       if (content.toLocaleLowerCase().includes('agente')) {
         user.state = UserState.agent;
@@ -128,7 +140,6 @@ export class Chat {
 
   private async newUser() {
     const newUser = User.build({
-      date: new Date(),
       name: 'pepito',
       number: this.number,
       messages: [],

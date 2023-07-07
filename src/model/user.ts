@@ -8,7 +8,6 @@ moment.tz.setDefault('America/Mexico_City');
 interface UserAttrs {
   name: string;
   number: string;
-  date: Date;
   messages: ChatCompletionRequestMessage[];
   state: UserState;
 }
@@ -35,10 +34,6 @@ const userSchema = new mongoose.Schema(
     },
     number: {
       type: String,
-      required: true,
-    },
-    date: {
-      type: Date,
       required: true,
     },
     state: {
@@ -68,6 +63,11 @@ const userSchema = new mongoose.Schema(
     },
   }
 );
+
+userSchema.pre<UserDoc>('save', function (next) {
+  this.updatedAt = moment().toDate();
+  next();
+});
 
 userSchema.statics.build = (attrs: UserAttrs) => {
   return new User(attrs);

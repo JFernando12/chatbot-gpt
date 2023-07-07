@@ -29,7 +29,6 @@ export class ChatGpt {
     messages: ChatCompletionRequestMessage[]
   ): Promise<ChatCompletionRequestMessage | undefined> {
     this.messages = this.messages.concat(messages);
-    console.log('messageToChatGpt: ', this.messages);
 
     const completion = await openai.createChatCompletion({
       model: this.model,
