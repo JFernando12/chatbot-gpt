@@ -29,35 +29,18 @@ export class Chat {
       const ultimaActualizacion = user.updatedAt;
 
       // Calcular la diferencia de tiempo entre la última actualización y el momento actual
-      console.log('Date now: ', moment().toDate());
-      console.log('Ultima actualizacion: ', ultimaActualizacion);
-      const minutesDifference = moment(moment().toDate()).diff(
+      const hoursDiferrence = moment(moment().toDate()).diff(
         ultimaActualizacion,
-        'minutes'
+        'hours'
       );
-      console.log('minutes: ', minutesDifference);
+      console.log('hoursDiference: ', hoursDiferrence);
 
-      const secondDiferrence = moment(moment().toDate()).diff(
-        ultimaActualizacion,
-        'seconds'
-      );
-      console.log('seconds', secondDiferrence);
-
-      // const diferenciaTiempo = Date.now() - ultimaActualizacion;
-      // const diferenciaHoras = Math.floor(diferenciaTiempo / (1000 * 60 * 60));
-      // const diferenciaMinutos = Math.floor(diferenciaTiempo / (1000 * 60));
-      // const diferenciaSegundos = Math.floor(diferenciaTiempo / 10000);
-
-      // console.log('diferenciaHoras: ', diferenciaHoras);
-      // console.log('diferenciaMinutos: ', diferenciaMinutos);
-      // console.log('diferenciaSegundos: ', diferenciaSegundos);
-
-      // if (diferenciaSegundos >= 20) {
-      //   user.messages = [];
-      //   user.state = UserState.new;
-      //   await user.save();
-      //   return { messsage: Templates.welcomeMessage, state: user.state };
-      // }
+      if (hoursDiferrence >= 24) {
+        user.messages = [];
+        user.state = UserState.new;
+        await user.save();
+        return { messsage: Templates.welcomeMessage, state: user.state };
+      }
 
       if (content.toLocaleLowerCase().includes('agente')) {
         user.state = UserState.agent;
@@ -140,7 +123,7 @@ export class Chat {
 
   private async newUser() {
     const newUser = User.build({
-      name: 'pepito',
+      name: 'Pepito',
       number: this.number,
       messages: [],
       state: UserState.new,

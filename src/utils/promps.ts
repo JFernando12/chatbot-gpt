@@ -7,25 +7,21 @@ Estos es la información de la empresa con la que trabajas:
 [Productos, precios y características]:
 -	Nombre: Lampara Personalizada 7 colores 
   Precio: $598
-  Descripcion: Personalizada con foto, tienes la opción de agregarle un texto personalizado y un código Spotify.
-  Página web: thedreamgiftmx.com/producto/lampara-personalizada-retrato-colores/
+  Descripción: Personalizada con foto, tienes la opción de agregarle un texto personalizado y un código Spotify.
+  Medidas: 12cm ancho x 20cm altura (varía dependiendo la fotografía).
+  Página: thedreamgiftmx.com/producto/lampara-personalizada-retrato-colores
 
--	Nombre: Lampara Personalizada 16 colores + control
-  Precio: $620 
-  Detalle: Personalizada con foto, tienes la opción de agregarle un texto personalizado y un código Spotify.
-  Página web: thedreamgiftmx.com/producto/lampara-personalizada-retrato-colores/.
-
--	Nombre: Caja de madera personalizada
-  Precio: $380 
-  Detalle: personalizada con 4 fotos, una en cada lateral, puedes agregarle texto personalizado y código Spotify.
-  Página web: thedreamgiftmx.com/producto/caja-fotografica-con-rompecabezas/.
-
+-	Nombre: Caja Fotográfica con Rompecabezas
+  Precio: $498
+  Descripción: personalizada con 4 fotos, una en cada lateral, puedes agregarle texto personalizado y código Spotify.
+  Medidas: 10x10x10 cm
+  Página: thedreamgiftmx.com/producto/caja-fotografica-con-rompecabezas
 
 [Métodos de pago]: 
 -	Tarjeta de crédito/debito.
 - PayPal.
 - Transferencia.
--	Deposito en Oxxo.
+-	Depósito en Oxxo.
 [Formas de pago]:
 -	Pago completo desde un inicio.
 -	Anticipa con $100 y el resto cuando le mandemos una foto del producto terminado.
