@@ -1,5 +1,5 @@
 export enum Templates {
-  welcomeMessage = `¡Hola! Soy Lucy, el bot de The Dream Gift.
+  welcomeMessage = `¡Hola! Soy Lucy, el asistente virtual de The Dream Gift.
 
 Te ayudaré a resolver todas tus preguntas, pero si deseas hablar con una persona, solo escribe "agente" y una persona de nuestro equipo se comunicará contigo.
   
