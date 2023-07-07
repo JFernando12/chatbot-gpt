@@ -29,6 +29,12 @@ const main = async () => {
           // Determinar si esta o no hablando con una persona real.
           if (response?.state !== UserState.agent && response?.messsage) {
             await whatsappClient.sendMessage(number, response.messsage);
+          } else if (response?.messsage) {
+            await whatsappClient.sendMessage(number, response.messsage);
+            await whatsappClient.sendMessage(
+              '7551175038',
+              `te estan hablando: ${number}`
+            );
           } else {
             await whatsappClient.sendMessage(
               '7551175038',
