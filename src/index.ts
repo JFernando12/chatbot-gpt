@@ -13,52 +13,48 @@ const main = async () => {
     const number = message.from.slice(3, 13);
     console.log('number', number);
 
-    if (message.from === '5217551163938@c.us') {
-      const content = message.body;
+    const content = message.body;
 
-      // Create new chat.
-      const chat = new Chat(number);
+    // Create new chat.
+    const chat = new Chat(number);
 
-      // Se tendran hasta 2 intentos en caso de fallo.
-      let i = 0;
-      while (i < 2) {
-        try {
-          // Procesar el mensaje;
-          const response = await chat.messageReceived(content);
+    // Se tendran hasta 2 intentos en caso de fallo.
+    let i = 0;
+    while (i < 2) {
+      try {
+        // Procesar el mensaje;
+        const response = await chat.messageReceived(content);
 
-          // Determinar si esta o no hablando con una persona real.
-          if (response?.state !== UserState.agent && response?.messsage) {
-            await whatsappClient.sendMessage(number, response.messsage);
-          } else if (response?.messsage) {
-            await whatsappClient.sendMessage(number, response.messsage);
-            await whatsappClient.sendMessage(
-              '7551175038',
-              `te estan hablando: ${number}`
-            );
-          } else {
-            await whatsappClient.sendMessage(
-              '7551175038',
-              `te estan hablando: ${number}`
-            );
-          }
-
-          i = 2;
-        } catch (error) {
-          try {
-            await whatsappClient.sendMessage(
-              '7551175038',
-              `ocurrio fallo: ${number}`
-            );
-          } catch (error) {
-            console.log('Revisar fallo con whatsapp');
-            console.error(error);
-          }
-
-          i++;
+        // Determinar si esta o no hablando con una persona real.
+        if (response?.state !== UserState.agent && response?.messsage) {
+          await whatsappClient.sendMessage(number, response.messsage);
+        } else if (response?.messsage) {
+          await whatsappClient.sendMessage(number, response.messsage);
+          await whatsappClient.sendMessage(
+            '7551175038',
+            `te estan hablando: ${number}`
+          );
+        } else {
+          await whatsappClient.sendMessage(
+            '7551175038',
+            `te estan hablando: ${number}`
+          );
         }
+
+        i = 2;
+      } catch (error) {
+        try {
+          await whatsappClient.sendMessage(
+            '7551175038',
+            `ocurrio fallo: ${number}`
+          );
+        } catch (error) {
+          console.log('Revisar fallo con whatsapp');
+          console.error(error);
+        }
+
+        i++;
       }
-    } else {
-      console.log('no te conozco');
     }
   });
 };
