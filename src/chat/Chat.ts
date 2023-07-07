@@ -23,16 +23,18 @@ export class Chat {
     const user = users[0];
 
     if (user) {
-      const ultimaActualizacion = user.updatedAt;
+      const ultimaActualizacion = Date.parse(user.updatedAt);
 
       // Calcular la diferencia de tiempo entre la última actualización y el momento actual
       console.log('Date now: ', Date.now());
       console.log('Ultima actualizacion: ', ultimaActualizacion);
       const diferenciaTiempo = Date.now() - ultimaActualizacion;
       const diferenciaHoras = Math.floor(diferenciaTiempo / (1000 * 60 * 60));
+      const diferenciaMinutos = Math.floor(diferenciaTiempo / (1000 * 60));
       const diferenciaSegundos = Math.floor(diferenciaTiempo / 10000);
 
       console.log('diferenciaHoras: ', diferenciaHoras);
+      console.log('diferenciaMinutos: ', diferenciaMinutos);
       console.log('diferenciaSegundos: ', diferenciaSegundos);
 
       if (diferenciaSegundos >= 20) {
