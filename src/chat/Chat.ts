@@ -12,7 +12,9 @@ export class Chat {
     this.number = number;
   }
 
-  async messageReceived(content: string) {
+  async messageReceived(
+    content: string
+  ): Promise<{ messsage: string | undefined; state: UserState } | undefined> {
     const newMessage: ChatCompletionRequestMessage = {
       role: 'user',
       content,
@@ -35,20 +37,20 @@ export class Chat {
         user.messages = [];
         user.state = UserState.new;
         await user.save();
-        return Templates.welcomeMessage;
+        return { messsage: Templates.welcomeMessage, state: user.state };
       }
 
       if (content.toLocaleLowerCase().includes('agente')) {
         user.state = UserState.agent;
         await user.save();
-        return;
+        return { messsage: '', state: user.state };
       }
 
       if (content.toLocaleLowerCase().includes('lucy')) {
         user.messages = [];
         user.state = UserState.new;
         await user.save();
-        return Templates.welcomeMessage;
+        return { messsage: Templates.welcomeMessage, state: user.state };
       }
 
       if (user.state === UserState.new) {
@@ -70,23 +72,26 @@ export class Chat {
             user.messages.push(response);
             await user.save();
           }
-          return response?.content;
+          return { messsage: response?.content, state: user.state };
         } else if (content.includes('2')) {
           user.state = UserState.agent;
           await user.save();
-          return Templates.agentInit;
+          return { messsage: Templates.agentInit, state: user.state };
         } else if (content.includes('3')) {
           user.state = UserState.agent;
           await user.save();
-          return Templates.agentInit;
+          return { messsage: Templates.agentInit, state: user.state };
         } else {
-          return 'Escribe el numero que desees: 1, 2 o 3';
+          return {
+            messsage: 'Escribe un numero valido: 1, 2, 3',
+            state: user.state,
+          };
         }
       }
 
       if (user.state === UserState.agent) {
         console.log('Un cliente te necesita');
-        return;
+        return { messsage: '', state: user.state };
       }
 
       if (user.state === UserState.chatgpt) {
@@ -102,10 +107,12 @@ export class Chat {
           user.messages.push(response);
           await user.save();
         }
-        return (
-          response?.content +
-          '\n\n_Recuerda que si prefieres realizar tu compra por aquí, escribe "agente" y un miembro de nuestro equipo te atenderá._'
-        );
+        return {
+          messsage:
+            response?.content +
+            '\n\n_Recuerda que si prefieres realizar tu compra por aquí, escribe "agente" y un miembro de nuestro equipo te atenderá._',
+          state: user.state,
+        };
       }
     } else {
       return await this.newUser();
@@ -122,6 +129,6 @@ export class Chat {
     });
     await newUser.save();
 
-    return Templates.welcomeMessage;
+    return { messsage: Templates.welcomeMessage, state: newUser.state };
   }
 }
