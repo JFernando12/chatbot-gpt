@@ -26,6 +26,8 @@ export class Chat {
       const ultimaActualizacion = user.updatedAt;
 
       // Calcular la diferencia de tiempo entre la última actualización y el momento actual
+      console.log('Date now: ', Date.now());
+      console.log('Ultima actualizacion: ', ultimaActualizacion);
       const diferenciaTiempo = Date.now() - ultimaActualizacion;
       const diferenciaHoras = Math.floor(diferenciaTiempo / (1000 * 60 * 60));
       const diferenciaSegundos = Math.floor(diferenciaTiempo / 10000);
