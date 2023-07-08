@@ -4,15 +4,15 @@ import { Chat } from './chat/Chat';
 import mongoose from 'mongoose';
 import { MONGO_URI } from './config';
 import { UserState } from './interfaces/states';
-import { app } from './app';
+// import { app } from './app';
 
 mongoose.connect(MONGO_URI!).then(() => {
   console.log('DB connected');
 });
 
-app.listen(3000, () => {
-  console.log('Server on port 3000');
-});
+// app.listen(3000, () => {
+//   console.log('Server on port 3000');
+// });
 
 whatsappClient.start();
 
