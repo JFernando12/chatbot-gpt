@@ -112,7 +112,7 @@ export class Chat {
         return {
           messsage:
             response?.content +
-            '\n\n_Recuerda que si prefieres realizar tu compra por aquí, escribe "agente" y un miembro de nuestro equipo te atenderá._',
+            '\n\n_Si prefieres realizar tu compra por aquí, escribe "agente" y un miembro de nuestro equipo te atenderá._',
           state: user.state,
         };
       }

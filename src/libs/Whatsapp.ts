@@ -4,6 +4,7 @@ import { numberValidation } from '../utils/numberValidation';
 
 class Whatsapp {
   private conexionStatus: boolean = false;
+  private conexionLoading: boolean = false;
   private client: Client = new Client({
     puppeteer: {
       args: [
@@ -20,25 +21,35 @@ class Whatsapp {
     authStrategy: new LocalAuth(),
   });
 
-  start(): Promise<void> {
-    return new Promise((resolve, reject) => {
+  start(): Promise<string | void> {
+    return new Promise(async (resolve, reject) => {
       if (this.conexionStatus) {
         resolve();
       }
-      console.log('Inciando whats');
-      this.client.initialize();
-      console.log('Se incio whats');
+
       this.client.on('qr', (qr) => {
         qrcode.generate(qr, { small: true });
+        resolve(qr);
       });
+
       this.client.on('ready', () => {
         this.conexionStatus = true;
+        this.conexionLoading = false;
         console.log('Whatsapp is ready!');
         resolve();
       });
+
       this.client.on('auth_failure', () => {
+        console.log('auth_failure');
         reject();
       });
+
+      if (!this.conexionLoading && !this.conexionStatus) {
+        console.log('Iniciando whats');
+        this.conexionLoading = true;
+        await this.client.initialize();
+      }
+      console.log('Se inicio whats');
     });
   }
 
@@ -49,6 +60,7 @@ class Whatsapp {
           if (this.conexionStatus) {
             await this.client.destroy();
             this.conexionStatus = false;
+            this.conexionLoading = false;
             console.log('WhatsApp closed!');
           }
           resolve();
@@ -72,10 +84,15 @@ class Whatsapp {
   }
 
   async button(phoneNumber: string, message: string) {
-    const buttons = new Buttons(message, [
-      { id: '123', body: 'Button 1' },
-      { id: '455', body: 'Button 2' },
-    ], 'title', 'footer');
+    const buttons = new Buttons(
+      message,
+      [
+        { id: '123', body: 'Button 1' },
+        { id: '455', body: 'Button 2' },
+      ],
+      'title',
+      'footer'
+    );
 
     const responseButton = await this.client.sendMessage(
       `521${phoneNumber}@c.us`,
