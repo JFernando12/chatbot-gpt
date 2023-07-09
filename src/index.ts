@@ -14,6 +14,8 @@ app.listen(3000, () => {
   console.log('Server on port 3000');
 });
 
+whatsappClient.disconnected();
+
 whatsappClient.listen(async (message: Message) => {
   const number = message.from.slice(3, 13);
   console.log('number', number);
@@ -49,9 +51,14 @@ whatsappClient.listen(async (message: Message) => {
 
           i = 2;
         } catch (error) {
+          console.log(error);
           try {
             await whatsappClient.sendMessage(
               '7551175038',
+              `ocurrio fallo: ${number}`
+            );
+            await whatsappClient.sendMessage(
+              '7551155510',
               `ocurrio fallo: ${number}`
             );
           } catch (error) {

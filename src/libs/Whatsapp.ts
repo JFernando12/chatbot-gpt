@@ -83,22 +83,12 @@ class Whatsapp {
     console.log(`Message sent to: ${phoneNumber}`);
   }
 
-  async button(phoneNumber: string, message: string) {
-    const buttons = new Buttons(
-      message,
-      [
-        { id: '123', body: 'Button 1' },
-        { id: '455', body: 'Button 2' },
-      ],
-      'title',
-      'footer'
-    );
-
-    const responseButton = await this.client.sendMessage(
-      `521${phoneNumber}@c.us`,
-      buttons
-    );
-    console.log('responseButton: ', responseButton);
+  disconnected() {
+    this.client.on('disconnected', () => {
+      this.conexionStatus = false;
+      this.conexionLoading = false;
+      console.log('WhatsApp disconnected!');
+    });
   }
 
   listen(callback: (message: any) => void) {
