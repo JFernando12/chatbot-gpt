@@ -4,6 +4,15 @@ const router = express.Router();
 import { whatsappClient } from '../../libs/Whatsapp';
 import response from '../network/response';
 
+router.get('/status', async (req: Request, res: Response) => {
+  try {
+    const status = whatsappClient.conexionStatus;
+    response.success(res, 200, 'Procesado exitosamente', status);
+  } catch (error) {
+    response.error(res, 500, 'No se pudo procesar la solicitud');
+  }
+});
+
 router.post('/stop', async (req: Request, res: Response) => {
   try {
     await whatsappClient.stop();
@@ -15,15 +24,9 @@ router.post('/stop', async (req: Request, res: Response) => {
 
 router.post('/start', async (req: Request, res: Response) => {
   try {
-    const data: { qr: string | null } = {
-      qr: null,
-    };
     const qr = await whatsappClient.start();
 
-    if (qr) {
-      data.qr = qr;
-    }
-    response.success(res, 200, 'Procesado exitosamente', data);
+    response.success(res, 200, 'Procesado exitosamente', qr);
   } catch (error) {
     response.error(res, 500, 'No se pudo procesar la solicitud');
   }

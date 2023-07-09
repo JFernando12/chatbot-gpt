@@ -3,7 +3,7 @@ import qrcode from 'qrcode-terminal';
 import { numberValidation } from '../utils/numberValidation';
 
 class Whatsapp {
-  private conexionStatus: boolean = false;
+  public conexionStatus: boolean = false;
   private conexionLoading: boolean = false;
   private client: Client = new Client({
     puppeteer: {
