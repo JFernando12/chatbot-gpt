@@ -45,7 +45,7 @@ Productos, precios y características:
   
   Puedes adquirir tu producto en los siguientes enlaces:
   1. Página web: thedreamgiftmx.com/producto/lampara-personalizada-retrato-long-wood
-  2. Mercado Libre: articulo.mercadolibre.com.mx/MLM-2238026374-lampara-retrato-led-personalizada-3d-7-colores-_JM
+  2. Mercado Libre: articulo.mercadolibre.com.mx/MLM-2321784820-lampara-retrato-led-personalizada-base-madera-luz-calida-_JM
   }}
 
   {{Caja Fotográfica con Rompecabezas - $498
