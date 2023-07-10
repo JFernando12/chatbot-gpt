@@ -35,7 +35,7 @@ export class Chat {
       );
       console.log('hoursDiference: ', hoursDiferrence);
 
-      if (hoursDiferrence >= 24) {
+      if (hoursDiferrence >= 24 && user.state !== UserState.new) {
         user.messages = [];
         user.state = UserState.new;
         await user.save();
@@ -85,7 +85,7 @@ export class Chat {
           return { messsage: Templates.agentInit, state: user.state };
         } else {
           return {
-            messsage: 'Escribe un numero valido: 1, 2, 3',
+            messsage: 'Escribe un número valido: 1, 2',
             state: user.state,
           };
         }

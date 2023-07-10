@@ -27,6 +27,27 @@ Productos, precios y características:
   2. Mercado Libre: articulo.mercadolibre.com.mx/MLM-2238026374-lampara-retrato-led-personalizada-3d-7-colores-_JM
   }}
 
+  {{Lámpara Personalizada Madera Ovalada - $640
+
+  Descripción
+  - Base de madera con luz cálida
+  - Fotografía personalizada 
+  - Incluye frase, fecha o código de spotify 
+  
+  Medida
+  - Varía dependiendo la imagen, puede llegar a medir hasta 22 cm de altura
+  
+  Tiempo de entrega 
+  - Envío gratis (10 a 12 días hábiles)
+  - Envío express con costo adicional (5 a 7 días hábiles) 
+  
+  Envíos a todo México 🇲🇽
+  
+  Puedes adquirir tu producto en los siguientes enlaces:
+  1. Página web: thedreamgiftmx.com/producto/lampara-personalizada-retrato-long-wood
+  2. Mercado Libre: articulo.mercadolibre.com.mx/MLM-2238026374-lampara-retrato-led-personalizada-3d-7-colores-_JM
+  }}
+
   {{Caja Fotográfica con Rompecabezas - $498
 
   Descripción 
@@ -53,14 +74,17 @@ Métodos de pago:
 - PayPal.
 - Transferencia.
 -	Depósito en Oxxo.
+
 Formas de pago:
 -	Pago completo desde un inicio.
 -	Anticipa con $100 y el resto cuando le mandemos una foto del producto terminado.
+
 Opciones de envío:
 -	RedPack estándar: Gratis (10 a 12 dias hábiles)
 -	Estafeta: $55 (5 a 7 dias hábiles)
 -	DHL: $95 (2 a 5 dias hábiles)
 Los tiempos son aproximados y dependen totalmente de la paquetería.
+
 Opciones de compra:
 - Por la pagina web.
 - Por Mercado Libre.
