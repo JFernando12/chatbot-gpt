@@ -5,6 +5,7 @@ import { RolesSystem } from '../interfaces/roles';
 import { Templates } from '../interfaces/templates';
 import { UserState } from '../interfaces/states';
 import moment = require('moment-timezone');
+import { Product } from '../model/product';
 
 moment.tz.setDefault('America/Mexico_City');
 
@@ -131,5 +132,26 @@ export class Chat {
     await newUser.save();
 
     return { messsage: Templates.welcomeMessage, state: newUser.state };
+  }
+
+  private async getProductsList() {
+    const products = await Product.find();
+
+    let message = 'Estos son los productos que tenemos disponibles:\n\n';
+
+    products.forEach((product, index) => {
+      message += `${index + 1} - *${product.name}*\n`;
+      message += `Precio: $${product.price}\n\n`;
+    });
+
+    message += 'Escoge un número para más información';
+
+    return { products, message};
+  }
+
+  private async getProductInfo(products: any[], productIndex: string) {
+    const product = products[parseInt(productIndex) - 1];
+
+    return product.description;
   }
 }
