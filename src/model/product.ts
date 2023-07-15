@@ -3,7 +3,6 @@ import mongoose from 'mongoose';
 interface ProductAttrs {
   name: string;
   price: number;
-  quantity: number;
   description: string;
   image: string;
 }
@@ -11,7 +10,6 @@ interface ProductAttrs {
 interface ProductDoc extends mongoose.Document {
   name: string;
   price: number;
-  quantity: number;
   description: string;
   image: string;
   createdAt: Date;
@@ -30,11 +28,7 @@ const productSchema = new mongoose.Schema(
     },
     price: {
       type: Number,
-      required: true,
-    },
-    quantity: {
-      type: Number,
-      required: true,
+      require: true,
     },
     description: {
       type: String,
@@ -51,15 +45,18 @@ const productSchema = new mongoose.Schema(
       transform(doc, ret) {
         ret.id = ret._id;
         delete ret._id;
-      }
-    }
+      },
+    },
   }
 );
 
 productSchema.statics.build = (attrs: ProductAttrs) => {
   return new Product(attrs);
-}
+};
 
-const Product = mongoose.model<ProductDoc, ProductModel>('Product', productSchema);
+const Product = mongoose.model<ProductDoc, ProductModel>(
+  'Product',
+  productSchema
+);
 
 export { Product };

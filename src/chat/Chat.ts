@@ -65,12 +65,12 @@ export class Chat {
               'Quiero que enlistes los nombre de los productos y precios e invitame a seleccionar uno para más informacion',
           });
           await user.save();
-          const chatGpt = new ChatGpt(RolesSystem.vendedor);
-          const formatedMessages = user.messages.map((message: any) => ({
-            role: message.role,
-            content: message.content,
-          }));
-          const response = await chatGpt.sendMessage(formatedMessages);
+
+          const products = await this.getProductsList();
+          const response: ChatCompletionRequestMessage = {
+            role: 'user',
+            content: products.message,
+          };
           if (response) {
             user.messages.push(response);
             await user.save();
@@ -146,7 +146,7 @@ export class Chat {
 
     message += 'Escoge un número para más información';
 
-    return { products, message};
+    return { products, message };
   }
 
   private async getProductInfo(products: any[], productIndex: string) {

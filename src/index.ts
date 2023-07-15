@@ -2,7 +2,7 @@ import { Message } from 'whatsapp-web.js';
 import { whatsappClient } from './libs/Whatsapp';
 import { Chat } from './chat/Chat';
 import mongoose from 'mongoose';
-import { MONGO_URI } from './config';
+import { ENV, MONGO_URI, PORT } from './config';
 import { UserState } from './interfaces/states';
 import { app } from './app';
 
@@ -10,8 +10,8 @@ mongoose.connect(MONGO_URI!).then(() => {
   console.log('DB connected');
 });
 
-app.listen(3000, () => {
-  console.log('Server on port 3000');
+app.listen(PORT, () => {
+  console.log('Server on port', PORT);
 });
 
 whatsappClient.disconnected();
@@ -19,6 +19,12 @@ whatsappClient.disconnected();
 whatsappClient.listen(async (message: Message) => {
   const number = message.from.slice(3, 13);
   console.log('number', number);
+
+  if (ENV === 'development' && number !== '7551175038') {
+    console.log('Development mode');
+    return;
+  }
+
   if (!isNaN(Number(number))) {
     const content = message.body;
 
