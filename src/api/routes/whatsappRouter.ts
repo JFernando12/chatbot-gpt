@@ -3,6 +3,7 @@ const router = express.Router();
 
 import { whatsappClient } from '../../libs/Whatsapp';
 import response from '../network/response';
+import { Chat } from '../../chat/Chat';
 
 router.get('/status', async (req: Request, res: Response) => {
   try {
@@ -27,6 +28,18 @@ router.post('/start', async (req: Request, res: Response) => {
     const qr = await whatsappClient.start();
 
     response.success(res, 200, 'Procesado exitosamente', qr);
+  } catch (error) {
+    response.error(res, 500, 'No se pudo procesar la solicitud');
+  }
+});
+
+router.post('/first-message', async (req: Request, res: Response) => {
+  try {
+    const { phone } = req.body;
+    const chat = new Chat(phone);
+    const data = await chat.newConversation();
+    await whatsappClient.sendMessage(phone, data.messsage);
+    response.success(res, 200, 'Procesado exitosamente');
   } catch (error) {
     response.error(res, 500, 'No se pudo procesar la solicitud');
   }

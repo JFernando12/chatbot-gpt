@@ -140,10 +140,10 @@ export class Chat {
     }
   }
 
-  private async newConversation() {
+  async newConversation(phoneNumber?: string) {
     const newConversation = Conversation.build({
       name: 'Pepito',
-      number: this.number,
+      number: phoneNumber || this.number,
       messages: [],
       state: ConversationState.new,
     });
