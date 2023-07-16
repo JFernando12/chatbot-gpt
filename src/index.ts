@@ -16,6 +16,8 @@ app.listen(PORT, () => {
 
 whatsappClient.disconnected();
 
+whatsappClient.start();
+
 whatsappClient.listen(async (message: Message) => {
   const number = message.from.slice(3, 13);
   console.log('number', number);
