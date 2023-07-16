@@ -1,5 +1,6 @@
-import { Buttons, Client, LocalAuth } from 'whatsapp-web.js';
+import { Client, LocalAuth, MessageMedia } from 'whatsapp-web.js';
 import qrcode from 'qrcode-terminal';
+import axios from 'axios';
 import { numberValidation } from '../utils/numberValidation';
 
 class Whatsapp {
@@ -81,6 +82,15 @@ class Whatsapp {
 
     await this.client.sendMessage(`521${phoneNumber}@c.us`, message);
     console.log(`Message sent to: ${phoneNumber}`);
+  }
+
+  async sendImage(phoneNumber: string, imageUrl: string): Promise<void> {
+    const response = await axios.get(imageUrl, { responseType: 'arraybuffer' });
+    const base64Image = Buffer.from(response.data, 'binary').toString('base64');
+    const media = new MessageMedia('image/png', base64Image);
+
+    await this.client.sendMessage(`521${phoneNumber}@c.us`, media);
+    console.log(`Image sent to: ${phoneNumber}`);
   }
 
   disconnected() {

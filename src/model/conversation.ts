@@ -1,29 +1,29 @@
 import mongoose from 'mongoose';
 import { ChatCompletionRequestMessage } from 'openai';
-import { UserState } from '../interfaces/states';
+import { ConversationState } from '../interfaces/states';
 import moment = require('moment-timezone');
 
 moment.tz.setDefault('America/Mexico_City');
 
-interface UserAttrs {
+interface ConversationAttrs {
   name: string;
   number: string;
   messages: ChatCompletionRequestMessage[];
-  state: UserState;
+  state: ConversationState;
 }
 
-interface UserDoc extends mongoose.Document {
+interface ConversationDoc extends mongoose.Document {
   name: string;
   number: string;
   date: Date;
   messages: ChatCompletionRequestMessage[];
-  state: UserState;
+  state: ConversationState;
   createdAt: Date;
   updatedAt: any;
 }
 
-interface UserModel extends mongoose.Model<UserDoc> {
-  build(attrs: UserAttrs): UserDoc;
+interface ConversationModel extends mongoose.Model<ConversationDoc> {
+  build(attrs: ConversationAttrs): ConversationDoc;
 }
 
 const userSchema = new mongoose.Schema(
@@ -64,15 +64,18 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-userSchema.pre<UserDoc>('save', function (next) {
+userSchema.pre<ConversationDoc>('save', function (next) {
   this.updatedAt = moment().toDate();
   next();
 });
 
-userSchema.statics.build = (attrs: UserAttrs) => {
-  return new User(attrs);
+userSchema.statics.build = (attrs: ConversationAttrs) => {
+  return new Conversation(attrs);
 };
 
-const User = mongoose.model<UserDoc, UserModel>('User', userSchema);
+const Conversation = mongoose.model<ConversationDoc, ConversationModel>(
+  'Conversation',
+  userSchema
+);
 
-export { User };
+export { Conversation };

@@ -1,9 +1,9 @@
 import { ChatCompletionRequestMessage } from 'openai';
 import { ChatGpt } from '../libs/Chatgpt';
-import { User } from '../model/user';
+import { Conversation } from '../model/conversation';
 import { RolesSystem } from '../interfaces/roles';
 import { Templates } from '../interfaces/templates';
-import { UserState } from '../interfaces/states';
+import { ConversationState } from '../interfaces/states';
 import moment = require('moment-timezone');
 import { Product } from '../model/product';
 
@@ -16,14 +16,19 @@ export class Chat {
     this.number = number;
   }
 
-  async messageReceived(
-    content: string
-  ): Promise<{ messsage: string | undefined; state: UserState } | undefined> {
+  async messageReceived(content: string): Promise<
+    | {
+        state: ConversationState;
+        messsage?: string;
+        image?: string;
+      }
+    | undefined
+  > {
     const newMessage: ChatCompletionRequestMessage = {
       role: 'user',
       content,
     };
-    const users = await User.find({ number: this.number });
+    const users = await Conversation.find({ number: this.number });
     const user = users[0];
 
     if (user) {
@@ -36,29 +41,32 @@ export class Chat {
       );
       console.log('hoursDiference: ', hoursDiferrence);
 
-      if (hoursDiferrence >= 24 && user.state !== UserState.new) {
+      if (hoursDiferrence >= 24 && user.state !== ConversationState.new) {
         user.messages = [];
-        user.state = UserState.new;
+        user.state = ConversationState.new;
         await user.save();
         return { messsage: Templates.welcomeMessage, state: user.state };
       }
 
       if (content.toLocaleLowerCase().includes('agente')) {
-        user.state = UserState.agent;
+        user.state = ConversationState.agent;
         await user.save();
         return { messsage: Templates.agentInit, state: user.state };
       }
 
-      if (content.toLocaleLowerCase().includes('lucy')) {
+      if (
+        content.toLocaleLowerCase().includes('lucy') ||
+        content.toLocaleLowerCase().includes('menu')
+      ) {
         user.messages = [];
-        user.state = UserState.new;
+        user.state = ConversationState.new;
         await user.save();
         return { messsage: Templates.welcomeMessage, state: user.state };
       }
 
-      if (user.state === UserState.new) {
+      if (user.state === ConversationState.new) {
         if (content.includes('1')) {
-          user.state = UserState.chatgpt;
+          user.state = ConversationState.products;
           user.messages.push({
             role: 'user',
             content:
@@ -77,11 +85,11 @@ export class Chat {
           }
           return { messsage: response?.content, state: user.state };
         } else if (content.includes('2')) {
-          user.state = UserState.agent;
+          user.state = ConversationState.agent;
           await user.save();
           return { messsage: Templates.agentInit, state: user.state };
         } else if (content.includes('3')) {
-          user.state = UserState.agent;
+          user.state = ConversationState.agent;
           await user.save();
           return { messsage: Templates.agentInit, state: user.state };
         } else {
@@ -92,12 +100,22 @@ export class Chat {
         }
       }
 
-      if (user.state === UserState.agent) {
+      if (user.state === ConversationState.products) {
+        const productInfo = await this.getProductInfo(content);
+
+        return {
+          state: user.state,
+          messsage: productInfo.message,
+          image: productInfo.image,
+        };
+      }
+
+      if (user.state === ConversationState.agent) {
         console.log('Un cliente te necesita');
         return { messsage: '', state: user.state };
       }
 
-      if (user.state === UserState.chatgpt) {
+      if (user.state === ConversationState.chatgpt) {
         user.messages.push(newMessage);
         await user.save();
         const chatGpt = new ChatGpt(RolesSystem.vendedor);
@@ -118,20 +136,20 @@ export class Chat {
         };
       }
     } else {
-      return await this.newUser();
+      return await this.newConversation();
     }
   }
 
-  private async newUser() {
-    const newUser = User.build({
+  private async newConversation() {
+    const newConversation = Conversation.build({
       name: 'Pepito',
       number: this.number,
       messages: [],
-      state: UserState.new,
+      state: ConversationState.new,
     });
-    await newUser.save();
+    await newConversation.save();
 
-    return { messsage: Templates.welcomeMessage, state: newUser.state };
+    return { messsage: Templates.welcomeMessage, state: newConversation.state };
   }
 
   private async getProductsList() {
@@ -144,14 +162,36 @@ export class Chat {
       message += `Precio: $${product.price}\n\n`;
     });
 
-    message += 'Escoge un número para más información';
+    message += 'Escoge un número para más información.';
 
     return { products, message };
   }
 
-  private async getProductInfo(products: any[], productIndex: string) {
-    const product = products[parseInt(productIndex) - 1];
+  private async getProductInfo(
+    productIndex: string
+  ): Promise<{ message: string; image: string }> {
+    const products = await Product.find();
 
-    return product.description;
+    //Comprobar que sea numero valido
+    if (
+      isNaN(Number(productIndex)) ||
+      Number(productIndex) <= 0 ||
+      Number(productIndex) > products.length
+    ) {
+      let message = 'Escribe un número de producto válido: ';
+      products.forEach((product, index) => {
+        if (index === products.length - 1) {
+          message += `o ${index + 1}.`;
+        } else {
+          message += `${index + 1}, `;
+        }
+      });
+      message += '\nPara para volver al menú principal escribe "menu".';
+      return { message, image: '' };
+    }
+
+    const product = products[Number(productIndex) - 1];
+
+    return { message: product.description, image: product.image };
   }
 }

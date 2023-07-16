@@ -2,8 +2,8 @@ import { Message } from 'whatsapp-web.js';
 import { whatsappClient } from './libs/Whatsapp';
 import { Chat } from './chat/Chat';
 import mongoose from 'mongoose';
-import { ENV, MONGO_URI, PORT } from './config';
-import { UserState } from './interfaces/states';
+import { ENV, MONGO_URI, NUMBER_TEST, PORT } from './config';
+import { ConversationState } from './interfaces/states';
 import { app } from './app';
 
 mongoose.connect(MONGO_URI!).then(() => {
@@ -20,7 +20,7 @@ whatsappClient.listen(async (message: Message) => {
   const number = message.from.slice(3, 13);
   console.log('number', number);
 
-  if (ENV === 'development' && number !== '7551175038') {
+  if (ENV == 'development' && number !== NUMBER_TEST) {
     console.log('Development mode');
     return;
   }
@@ -39,7 +39,10 @@ whatsappClient.listen(async (message: Message) => {
         const response = await chat.messageReceived(content);
 
         // Determinar si esta o no hablando con una persona real.
-        if (response?.state !== UserState.agent && response?.messsage) {
+        if (response?.state !== ConversationState.agent && response?.messsage) {
+          if (response?.image) {
+            await whatsappClient.sendImage(number, response.image);
+          }
           await whatsappClient.sendMessage(number, response.messsage);
         } else if (response?.messsage) {
           await whatsappClient.sendMessage(number, response.messsage);
