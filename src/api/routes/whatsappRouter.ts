@@ -41,7 +41,8 @@ router.post('/first-message', async (req: Request, res: Response) => {
     await whatsappClient.sendMessage(phone, data.messsage);
     response.success(res, 200, 'Procesado exitosamente');
   } catch (error) {
-    response.error(res, 500, 'No se pudo procesar la solicitud');
+    console.log(error);
+    response.error(res, 500, 'No se pudo crear la conversacion');
   }
 });
 
