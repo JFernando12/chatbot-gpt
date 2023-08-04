@@ -89,12 +89,10 @@ export class Chat {
           await user.save();
           return { messsage: Templates.agentInit, state: user.state };
         } else if (content.includes('3')) {
-          user.state = ConversationState.agent;
-          await user.save();
-          return { messsage: Templates.agentInit, state: user.state };
+          return { messsage: Templates.reviews, state: user.state };
         } else {
           return {
-            messsage: 'Escribe un número valido: 1, 2',
+            messsage: 'Escribe un número valido: 1, 2, o 3. Si prefieres hablar con un agente escribe "agente".',
             state: user.state,
           };
         }
