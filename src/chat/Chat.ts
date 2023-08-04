@@ -157,10 +157,10 @@ export class Chat {
 
     products.forEach((product, index) => {
       message += `${index + 1} - *${product.name}*\n`;
-      message += `Precio: $${product.price}\n\n`;
+      message += `Desde $${product.price} + Envío gratis\n\n`;
     });
 
-    message += 'Contamos con meses sin intereses!💳\n'
+    message += 'Contamos con meses sin intereses! 💳\n\n'
     message += 'Escoge un número para más información.👇🏼';
 
     return { products, message };
