@@ -160,6 +160,7 @@ export class Chat {
       message += `Precio: $${product.price}\n\n`;
     });
 
+    message += 'Contamos con meses sin intereses!💳\n'
     message += 'Escoge un número para más información.';
 
     return { products, message };
@@ -184,7 +185,7 @@ export class Chat {
           message += `${index + 1}, `;
         }
       });
-      message += '\nPara para volver al menú principal escribe "menu".';
+      message += '\nSi prefieres hablar con un agente escribe "agente"';
       return { message, image: '' };
     }
 
