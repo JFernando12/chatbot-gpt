@@ -1,5 +1,5 @@
 export enum Templates {
-  welcomeMessage = `Hola ¿Como estas? 😊, si buscas un regalo especial para esa persona especial, has llegado al lugar indicado!
+  welcomeMessage = `Hola ¿Como estas? 😊, si buscas un regalo especial para esa persona especial, has llegado al lugar indicado!🎁
   
 *Por favor elige una opción:*
 1 - Información de los productos.
