@@ -161,7 +161,7 @@ export class Chat {
     });
 
     message += 'Contamos con meses sin intereses!💳\n'
-    message += 'Escoge un número para más información.';
+    message += 'Escoge un número para más información.👇🏼';
 
     return { products, message };
   }
