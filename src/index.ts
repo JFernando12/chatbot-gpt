@@ -96,7 +96,7 @@ cron.schedule('* * * * *', async() => {
     const usersToOffer = await Conversation.find({
       state: ConversationState.products, // state: operador para comparar que "state" sea igual a "products"
       offer: { $ne: 1 }, // $ne: operador para comparar que "offer" sea diferente de 1
-      updatedAt: { $gte: dosDiasAtras }, // $gte: operador para comparar que "updatedAt" sea mayor o igual a la fecha de dos días atrás
+      updatedAt: { $lte: dosDiasAtras }, // $lte: operador para comparar que "updatedAt" sea menor o igual a la fecha de dos días atrás
     });
 
     console.log('usersToOffer', usersToOffer);
