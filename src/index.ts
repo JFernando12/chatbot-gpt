@@ -101,18 +101,18 @@ cron.schedule('* * * * *', async() => {
 
     console.log('usersToOffer', usersToOffer);
 
-    // Recorre los usuarios que no han recibido la oferta
-    // for (const user of usersToOffer) {
-    //   // Envía la oferta
-    //   await whatsappClient.sendMessage(user.number, `¿No te convenciste?🤭, que tal si te ofrezco un 20% de descuento en tu primera compra.
-    //   Quedando a solo $498 la Lámpara Personalizada! con envío gratis hasta tu domicilio.🎁
+    //Recorre los usuarios que no han recibido la oferta
+    for (const user of usersToOffer) {
+      // Envía la oferta
+      await whatsappClient.sendMessage(user.number, `¿No te convenciste?🤭, que tal si te ofrezco un 20% de descuento en tu primera compra.
+Quedando a solo $498 la Lámpara Personalizada! con envío gratis hasta tu domicilio.🎁
       
-    //   Si te interesa, solo escribe "agente" y te atenderé personalmente 🙌🏼`);
+Si te interesa, solo escribe "agente" y te atenderé personalmente 🙌🏼`);
 
-    //   // Actualiza el estado del usuario
-    //   user.offer = 1;
-    //   await user.save();
-    // }
+      // Actualiza el estado del usuario
+      user.offer = 1;
+      await user.save();
+    }
   } catch (error) {
     console.log(error);
   }
