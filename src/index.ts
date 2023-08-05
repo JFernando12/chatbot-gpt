@@ -87,7 +87,7 @@ whatsappClient.listen(async (message: Message) => {
   }
 });
 
-cron.schedule('* * * * *', async() => {
+cron.schedule('0 */2 * * *', async() => {
   try {
     // Obtiene la fecha actual menos 2 días usando moment-timezone
     const dosDiasAtras = moment().subtract(2, 'days').toDate();
