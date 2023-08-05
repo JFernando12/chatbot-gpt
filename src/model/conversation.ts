@@ -10,6 +10,7 @@ interface ConversationAttrs {
   number: string;
   messages: ChatCompletionRequestMessage[];
   state: ConversationState;
+  offer?: number;
 }
 
 interface ConversationDoc extends mongoose.Document {
@@ -18,6 +19,7 @@ interface ConversationDoc extends mongoose.Document {
   date: Date;
   messages: ChatCompletionRequestMessage[];
   state: ConversationState;
+  offer?: number;
   createdAt: Date;
   updatedAt: any;
 }
@@ -39,6 +41,10 @@ const userSchema = new mongoose.Schema(
     state: {
       type: String,
       required: true,
+    },
+    offer: {
+      type: Number,
+      required: false,
     },
     messages: [
       {

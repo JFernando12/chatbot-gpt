@@ -36,9 +36,10 @@ router.post('/start', async (req: Request, res: Response) => {
 router.post('/first-message', async (req: Request, res: Response) => {
   try {
     const { phone } = req.body;
-    const chat = new Chat(phone);
+    const fixedPhone = phone.replace(' ', '').slice(-10);
+    const chat = new Chat(fixedPhone);
     const data = await chat.newConversation();
-    await whatsappClient.sendMessage(phone, data.messsage);
+    await whatsappClient.sendMessage(fixedPhone, data.messsage);
     response.success(res, 200, 'Procesado exitosamente');
   } catch (error) {
     console.log(error);
